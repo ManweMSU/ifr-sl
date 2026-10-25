@@ -1,0 +1,48 @@
+"xservus.http" {
+	Classis			= "xservus.http"	// HTTP сервер
+	NumerusFilorum	= 0					// Количество потоков в очереди сервера
+}
+"xservus.http_portus" {
+	Classis		= "xservus.http_portus"	// Отдельный порт работы сервера "xservus.http"
+	Portus		= 8080					// Номер порта
+	Modus		= "HTTP-IPv4"			// Тип службы: "HTTP-IPv4", "HTTP-IPv6", "HTTPS-IPv4" или "HTTPS-IPv6"
+	Indentitas	= "id.p12"				// Личность в формате PKCS #12 для HTTPS варианта
+	Clavis		= "1234"				// Пароль от личности
+}
+"xservus.http_extensio_limarum" {
+	Classis			= "xservus.http_extensio_limarum"	// Расширение "xservus.http", предоставляющее доступ к файловой системе машины
+	Praeverbium		= "/limae"							// Префикс путей URL, обрабатываемых этим расширением
+	Collectorium	= "/home/usor"						// Путь к каталогу, отображаемому на указанные префиксы URL
+	"Permitte-Collectoria"			= "1"				// Разрешить отображение содержимого каталогов при обращении к ним
+	"Permitte-Scriptiones"			= "1"				// Разрешить запросы на запись или удаление (стандартно разрешены только запросы на чтение)
+	"Postverbium-Collectoriorum"	= "/index.html"		// Переадресовывать все запросы к каталогам на URL с указанным суффиксом
+	"Formatus-Limae-XXX"	= "mime/type|utf-8|0"		// Сообщаемые клиенту данные при обращении к файлу с расширением XXX: MIME-тип, кодировка (для текстовых), '1' для принуждения к скачиванию
+	"Formatus-Defalta"		= "mime/type|utf-8|0"		// Сообщаемые клиенту данные при обращении к файлу с неопознанным расширением
+}
+"xservus.http_extensio_errorum" {
+	Classis				= "xservus.http_extensio_errorum"	// Расширение "xservus.http", замещающее генератор ответов для кодов 3XX, 4XX и 5XX умолчания
+	"Nomina-Statorum"	= "stati.ecst"						// Строковая таблица с названиями статусов HTTP. Строка с ID = 0 используется для неизвестных статусов
+	"Data-Basis"		= "ERROR %0 (%1): %2"				// Шаблон тела ответа. %0 - код статуса, %1 - название статуса, %2 - путь к запрошенному ресурсу
+	"Lima-Basis"		= "error.html"						// Имя файла с шаблоном ответа (в кодировке UTF-8)
+}
+"xservus.http_generator_collectoriorum" {
+	Classis						= "xservus.http_generator_collectoriorum"	// Расширение "xservus.http_extensio_limarum", переопределяющее генерацию ответа при запросе содержимого каталога умолчания
+	"Data-Basis-Radicalis"		= "Collectorium %2 (%1)\n%0"				// Шаблон тела ответа для корневого каталога. %0 - конкатенация генераций для содержимого каталога, %1 - путь к каталогу относительно точки монтирования, %2 - имя каталога
+	"Lima-Basis-Radicalis"		= "collectorium-radicalis.html"				// Имя файла с шаблоном тела ответа для корневого каталога (в кодировке UTF-8)
+	"Data-Basis"				= "Collectorium %2 (%1)\n%0"				// Шаблон тела ответа для не-корневого каталога
+	"Lima-Basis"				= "collectorium-non-radicalis.html"			// Имя файла с шаблоном тела ответа для не-корневого каталога (в кодировке UTF-8)
+	"Data-Objecti-Limae"		= "<a href=\"%0\">%1</a><br>"				// Шаблон для элемента-файла. %0 - URL объекта, %1 - имя объекта
+	"Lima-Objecti-Limae"		= "lima.html"								// Имя файла с шаблоном элемента-файла (в кодировке UTF-8)
+	"Data-Objecti-Collectorii"	= "<a href=\"%0\">%1</a><br>"				// Шаблон для элемента-каталога. %0 - URL объекта, %1 - имя объекта
+	"Lima-Objecti-Collectorii"	= "collectorium.html"						// Имя файла с шаблоном элемента-каталога (в кодировке UTF-8)
+}
+"xservus.http_censor" {
+	Classis					= "xservus.http_censor"	// Расширение "xservus.http_extensio_limarum", управляющее правами доступа к URL
+	"Cense-Permissiones"	= 6						// Битовая маска цензурируемых обращений (4 - чтение, 2 - запись/удаление)
+	"Dominatus-Require"		= "Dominatus"			// Домен прав пользователя, который будет проверяться для разрешения доступа
+	"Permissiones-Require"	= 256					// Битовая маска прав, которые должны присутствовать в домене. Если 0, то авторизация не требуется для доступа
+	"80"					= "https://foo.bar%0"	// При обращении к указанному порту (80) переадресовывать запрос на шаблон URL (%0 заменяется путь к ресурсу)
+	"8080"					= ""					// При обращении к указанному порту (8080) всегда запрещать доступ
+	"Anathemare"			= 3						// Блокировать доступ с IP после заданного числа (3) неудачных попыток авторизации. Значение 0 отключает лимит ошибок
+	"Tempus-Anathemae"		= "01:02:03"			// Время блокировки IP в формате "HH:MM:SS" (часы, минуты, секунды)
+}

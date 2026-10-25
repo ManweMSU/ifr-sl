@@ -1,0 +1,74 @@
+﻿auxilium attributum (meta.attributum_nomen_moduli)		= "X Servus - Modulus Systemae Limarum";
+auxilium attributum (meta.attributum_iura_exempli)		= "© Engine Software. 2026";
+auxilium attributum (meta.attributum_creator_moduli)	= "Engine Software";
+auxilium attributum (meta.attributum_versio)			= "1.0.0.1";
+
+[[systema] librosa]
+[[extensio] "xsxo"]
+
+importa libxservus;
+importa ifr_sl interne;
+importa ifr_sl_servus interne;
+
+spatium xservus {
+	structura ifr_sl hereditat extensio {
+		collectiones.dictionarium[linea, linea] _argumenta;
+		
+		@nihil genus_extensionis_radicalis { adipisce redefini { responde nullus; } }
+		@extensio extensio_radicalis { adipisce redefini { responde nullus; } }
+		!collectiones.dictionarium[linea, linea] argumenta { adipisce iacit redefini { responde crea(collectiones.dictionarium[linea, linea], _argumenta); } }
+		functio nihil ini(@extensio basis, ~collectiones.dictionarium[linea, linea] arg) iacit redefini {
+			_argumenta = arg;
+			var ext = para_servum()^.para_extensiones(ego);
+			var su = para_servum() acsi (systema_usorum);
+			var usores = su^.nomina;
+			per (var i : ext^) {
+				var e = ext^[i] acsi (ifr_sl_locatio);
+				per (var j : usores) {
+					var u = su^.expone(usores[j]);
+					si (u^.permissiones(e^.dominatus_require) & e^.permissiones_require == e^.permissiones_require) {
+						proba remota.systema_limarum.servus.adde(u^.nomen, u^.clavis);
+						remota.systema_limarum.servus.permitte(u^.nomen, e^.locatio, e^.nomen, e^.permissiones);
+					}
+				}
+			}
+		}
+		functio nihil post_ini() iacit redefini {}
+		functio nihil siste() redefini {}
+	}
+	structura ifr_sl_locatio hereditat extensio {
+		@extensio _parens;
+		collectiones.dictionarium[linea, linea] _argumenta;
+
+		linea dominatus_require;
+		linea nomen;
+		semita locatio;
+		nint permissiones;
+		nint permissiones_require;
+
+		@nihil genus_extensionis_radicalis { adipisce redefini { responde ifr_sl; } }
+		@extensio extensio_radicalis { adipisce redefini { responde _parens; } }
+		!collectiones.dictionarium[linea, linea] argumenta { adipisce iacit redefini { responde crea(collectiones.dictionarium[linea, linea], _argumenta); } }
+		functio nihil ini(@extensio basis, ~collectiones.dictionarium[linea, linea] arg) iacit redefini {
+			_argumenta = arg;
+			_parens = basis;
+			var aarg = _argumenta["dominatus-require"];
+			si (aarg != nullus) dominatus_require = aarg^;
+			alioqui iace errores.argumentum_falsum;
+			aarg = _argumenta["permissiones-require"];
+			si (aarg != nullus) permissiones_require = aarg^.ad_nint32();
+			alioqui iace errores.argumentum_falsum;
+			aarg = _argumenta["expone"];
+			si (aarg != nullus) locatio = aarg^;
+			alioqui iace errores.argumentum_falsum;
+			aarg = _argumenta["nomen"];
+			si (aarg != nullus) nomen = aarg^;
+			alioqui iace errores.argumentum_falsum;
+			aarg = _argumenta["permissiones"];
+			si (aarg != nullus) permissiones = aarg^.ad_nint32();
+			alioqui iace errores.argumentum_falsum;
+		}
+		functio nihil post_ini() iacit redefini {}
+		functio nihil siste() redefini {}
+	}
+}

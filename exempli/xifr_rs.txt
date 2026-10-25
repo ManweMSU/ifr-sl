@@ -1,0 +1,9 @@
+"xservus.ifr_rs" {
+	Classis			= "xservus.ifr_rs"	// Служба удалённого управления сервером. Косвенно требует "xservus.ifr"
+}
+"xservus.ifr_rs_permissio" {
+	Classis					= "xservus.ifr_rs_permissio"	// Права пользователей для "xservus.ifr_rs"
+	Permissiones			= 6								// Битовая маска прав доступа клиента к серверу (4 - чтение состояния, 2 - управление)
+	"Dominatus-Require"		= "Dominatus"					// Домен прав пользователя, который будет проверяться для разрешения доступа
+	"Permissiones-Require"	= 256							// Битовая маска прав, которые должны присутствовать в домене
+}

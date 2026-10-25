@@ -1,0 +1,34 @@
+﻿auxilium attributum (meta.attributum_nomen_moduli)		= "Rectio X Servi per IFR";
+auxilium attributum (meta.attributum_creator_moduli)	= "Engine Software";
+auxilium attributum (meta.attributum_iura_exempli)		= "© Engine Software. 2026";
+auxilium attributum (meta.attributum_versio)			= "1.0.0.1";
+
+[[systema] librosa]
+
+importa ifr;
+
+spatium remota {
+	spatium xservus {
+		structura extensio {
+			linea nomen_classis;
+			int numerus_parentis;
+			ordo (linea, linea) argumenta;
+		}
+		structura status_servi {
+			ordo extensio extensiones;
+			int potentia;
+			dfrac valor_praecipiendi;
+		}
+		[[ifr]] genus servus hereditat remota.objectum {
+			nint permissiones { adipisce iacit virtualis pura; }
+			status_servi status { adipisce iacit virtualis pura; }
+			functio nihil siste_systemam() iacit virtualis pura;
+			functio nihil recipe_systemam() iacit virtualis pura;
+			functio nihil siste_servum() iacit virtualis pura;
+			functio nihil recipe_servum() iacit virtualis pura;
+		}
+		[[ifr]] genus authorizator hereditat remota.objectum {
+			functio !servus authoriza(~linea usor, ~linea clavis) iacit virtualis pura;
+		}
+	}
+}

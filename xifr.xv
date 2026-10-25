@@ -1,0 +1,195 @@
+﻿auxilium attributum (meta.attributum_nomen_moduli)		= "X Servus - Modulus IFR";
+auxilium attributum (meta.attributum_iura_exempli)		= "© Engine Software. 2026";
+auxilium attributum (meta.attributum_creator_moduli)	= "Engine Software";
+auxilium attributum (meta.attributum_versio)			= "1.0.0.1";
+
+[[systema] librosa]
+[[extensio] "xsxo"]
+
+importa libxservus;
+importa limae;
+importa ifr;
+
+spatium xservus {
+	structura ifr hereditat extensio {
+		structura _ifr_contextus hereditat objectum {
+			!contextus.semaphorum synch;
+			!contextus.signale servus_closus_est;
+			!contextus.signale servus_finitus_est;
+			nint labores;
+
+			structor () iacit {
+				funda labores(1);
+				synch = contextus.crea_semaphorum(1);
+				servus_closus_est = contextus.crea_signale();
+				servus_finitus_est = contextus.crea_signale();
+				si (!synch || !servus_closus_est || !servus_finitus_est) iace errores.memoria_nulla;
+			}
+			functio nihil increma() { incrementum_securum(labores); }
+			functio nihil decrema() { si (!decrementum_securum(labores)) servus_finitus_est^.erige(); }
+		}
+		structura _ifr_sessio hereditat contextus.labos {
+			nomen_alternum ifr_collectio = collectiones.dictionarium[nintadl, !_ifr_sessio];
+			!_ifr_contextus ctx;
+			!remota.servus srvs;
+			@ifr_collectio sessiones;
+
+			structor (@_ifr_contextus contextus, @communicatio.canale cnl, @ifr_collectio ses) iacit {
+				ctx.contine(contextus);
+				sessiones = ses;
+				srvs = crea(remota.servus, cnl, para_servum()^.cauda_communalis);
+				srvs^.labos_closionis = ego;
+				srvs^.exeque();
+				ctx^.increma();
+			}
+			destructor () { ctx^.decrema(); }
+			functio nihil exeque(@objectum cauda) redefini {
+				ctx^.synch^.opperire();
+				sessiones^.remove((nintadl)(ego));
+				ctx^.synch^.aperi();
+			}
+		}
+		structura _ifr_attentor hereditat contextus.labos {
+			!_ifr_contextus ctx;
+			!communicatio.attentor attentor;
+			!communicatio.canale canale;
+			communicatio.status_erroris error;
+			@_ifr_sessio.ifr_collectio sessiones;
+
+			structor (@_ifr_contextus contextus, @communicatio.attentor att, @_ifr_sessio.ifr_collectio ses) iacit {
+				ctx.contine(contextus);
+				attentor.contine(att);
+				sessiones = ses;
+				attentor^.accipe(-1, @error, @canale, nullus, ego);
+				ctx^.increma();
+			}
+			destructor () { ctx^.decrema(); }
+			functio nihil exeque(@objectum cauda) redefini {
+				proba {
+					error.modera();
+					si (ctx^.servus_closus_est^.opperire(0)) responde;
+					var ifrses = crea(_ifr_sessio, ctx, canale, sessiones);
+					ctx^.synch^.opperire();
+					proba {
+						sessiones^.adde((nintadl)(ifrses.valor()), ifrses);
+					} cape (nintadl e, nintadl se) {
+						ctx^.synch^.aperi();
+						iace e, se;
+					}
+					ctx^.synch^.aperi();
+				} cape (nintadl e, nintadl se) proba {
+					ctx^.synch^.opperire();
+					si (attentor) {
+						proba attentor^.clode();
+						attentor.depura();
+					}
+					ctx^.synch^.aperi();
+					linea de, dse;
+					errores.descriptio(e, se, de, dse);
+					si (dse.longitudo) actuarius.scribe("IFR SERVUS - ERROR ACCIPIENDI: " + de + " (" + dse + ")");
+					alioqui actuarius.scribe("IFR SERVUS - ERROR ACCIPIENDI: " + de);
+				}
+			}
+		}
+
+		collectiones.dictionarium[linea, linea] _argumenta;
+		_ifr_sessio.ifr_collectio _sessiones;
+		collectiones.dictionarium[nintadl, !_ifr_attentor] _attentores;
+		!_ifr_contextus _ctx;
+		
+		@nihil genus_extensionis_radicalis { adipisce redefini { responde nullus; } }
+		@extensio extensio_radicalis { adipisce redefini { responde nullus; } }
+		!collectiones.dictionarium[linea, linea] argumenta { adipisce iacit redefini { responde crea(collectiones.dictionarium[linea, linea], _argumenta); } }
+		functio nihil ini(@extensio basis, ~collectiones.dictionarium[linea, linea] arg) iacit redefini {
+			_argumenta = arg;
+			_ctx = crea(_ifr_contextus);
+			var ext = para_servum()^.para_extensiones(ego);
+			per (var i : ext^) {
+				var e = ext^[i] acsi (ifr_portus);
+				var att = communicatio.crea_attentorem();
+				si (e^.modus == 0) {
+					att^.adnecte(communicatio.adloquium_localis(e^.nomen));
+				} alioqui si (e^.modus == 1) {
+					att^.adnecte(communicatio.adloquium_ipv4.servus(e^.portus));
+				} alioqui si (e^.modus == 2) {
+					att^.adnecte(communicatio.adloquium_ipv6.servus(e^.portus));
+				} alioqui si (e^.modus == 3) {
+					att^.adnecte(communicatio.adloquium_ipv4.servus(e^.portus), e^.indentitas);
+				} alioqui si (e^.modus == 4) {
+					att^.adnecte(communicatio.adloquium_ipv6.servus(e^.portus), e^.indentitas);
+				} alioqui iace errores.habitus_falsus;
+				var ifratt = crea(_ifr_attentor, _ctx, att, @_sessiones);
+				proba {
+					_ctx^.synch^.opperire();
+					proba {
+						_attentores.adde((nintadl)(ifratt.valor()), ifratt);
+					} cape (nintadl e, nintadl se) {
+						_ctx^.synch^.aperi();
+						iace e, se;
+					}
+					_ctx^.synch^.aperi();
+				} cape (nintadl e, nintadl se) {
+					ifratt^.attentor^.clode();
+					iace e, se;
+				}
+			}
+		}
+		functio nihil post_ini() iacit redefini {}
+		functio nihil siste() redefini {
+			si (!_ctx) responde;
+			_ctx^.servus_closus_est^.erige();
+			_ctx^.synch^.opperire();
+			per (var i : _attentores) {
+				proba i^.valor.secundus^.attentor^.clode();
+				i^.valor.secundus^.attentor.depura();
+			}
+			per (var i : _sessiones) proba i^.valor.secundus^.srvs^.clode();
+			_attentores.depura();
+			_sessiones.depura();
+			_ctx^.synch^.aperi();
+			_ctx^.decrema();
+			_ctx^.servus_finitus_est^.opperire();
+			_ctx.depura();
+		}
+	}
+	structura ifr_portus hereditat extensio {
+		@extensio _parens;
+		collectiones.dictionarium[linea, linea] _argumenta;
+
+		nint modus; // 0 - IFR/Locale, 1 - IFR/TCP/IPv4, 2 - IFR/TCP/IPv6, 3 - IFR/TLS/TCP/IPv4, 4 - IFR/TLS/TCP/IPv6
+		nint portus;
+		linea nomen;
+		communicatio.indentitas indentitas;
+
+		@nihil genus_extensionis_radicalis { adipisce redefini { responde ifr; } }
+		@extensio extensio_radicalis { adipisce redefini { responde _parens; } }
+		!collectiones.dictionarium[linea, linea] argumenta { adipisce iacit redefini { responde crea(collectiones.dictionarium[linea, linea], _argumenta); } }
+		functio nihil ini(@extensio basis, ~collectiones.dictionarium[linea, linea] arg) iacit redefini {
+			_argumenta = arg;
+			_parens = basis;
+			portus = 0;
+			var aarg = _argumenta["modus"];
+			si (aarg != nullus) {
+				si (aarg^ # "ifr-locale" == 0) modus = 0;
+				alioqui si (aarg^ # "ifr-ipv4" == 0) modus = 1;
+				alioqui si (aarg^ # "ifr-ipv6" == 0) modus = 2;
+				alioqui si (aarg^ # "ifr-tls-ipv4" == 0) modus = 3;
+				alioqui si (aarg^ # "ifr-tls-ipv6" == 0) modus = 4;
+				alioqui iace errores.argumentum_falsum;
+			} alioqui iace errores.argumentum_falsum;
+			si (modus) {
+				aarg = _argumenta["portus"];
+				si (aarg != nullus) portus = aarg^.ad_nint32(); alioqui iace errores.argumentum_falsum;
+				aarg = _argumenta["indentitas"];
+				si (aarg != nullus) indentitas.data = semita(aarg^).crea_limam(modus_limae.legere, modus_creatoris.aperi_praesens)^.lege_ordinem();
+				aarg = _argumenta["clavis"];
+				si (aarg != nullus) indentitas.clavis = aarg^;
+			} alioqui {
+				aarg = _argumenta["nomen"];
+				si (aarg != nullus) nomen = aarg^; alioqui iace errores.argumentum_falsum;
+			}
+		}
+		functio nihil post_ini() iacit redefini {}
+		functio nihil siste() redefini {}
+	}
+}

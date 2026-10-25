@@ -160,6 +160,7 @@ spatium xservus {
 		var a = para_argumenta();
 		var b = a^.longitudo > 1 ? semita(a^[1]) : semita("xservus.ini");
 		var c = formati.tabularium.onera(b.crea_limam(modus_limae.legere, modus_creatoris.aperi_praesens));
+		b.parens.loca_currentem();
 		responde c;
 	}
 	functio nihil onera_modulos(@formati.tabularium configuratio) iacit {
@@ -277,7 +278,6 @@ spatium xservus {
 	functio nihil exeque() introitus iacit {
 		proba {
 			var s = crea(impl_servus);
-			semita.modulus_primus().parens.loca_currentem();
 			var configuratio = onera_configurationem();
 			si (configuratio^["VetaSuspendum"] acsi (logicum)^) potentia.veta_suspendendum(sic, non);
 			s^.cauda = contextus.crea_caudam_filorum(configuratio^["NumerusFilorum"] acsi (int)^);

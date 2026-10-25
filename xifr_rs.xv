@@ -1,0 +1,141 @@
+﻿auxilium attributum (meta.attributum_nomen_moduli)		= "X Servus - Modulus Regendi ab Servo";
+auxilium attributum (meta.attributum_iura_exempli)		= "© Engine Software. 2026";
+auxilium attributum (meta.attributum_creator_moduli)	= "Engine Software";
+auxilium attributum (meta.attributum_versio)			= "1.0.0.1";
+
+[[systema] librosa]
+[[extensio] "xsxo"]
+
+importa libxservus;
+importa potentia;
+importa lxx;
+importa ifr_rs interne;
+
+spatium xservus {
+	structura ifr_rs hereditat extensio {
+		collectiones.dictionarium[linea, linea] _argumenta;
+		@systema_usorum su;
+		!ordo !extensio permissiones;
+		
+		@nihil genus_extensionis_radicalis { adipisce redefini { responde nullus; } }
+		@extensio extensio_radicalis { adipisce redefini { responde nullus; } }
+		!collectiones.dictionarium[linea, linea] argumenta { adipisce iacit redefini { responde crea(collectiones.dictionarium[linea, linea], _argumenta); } }
+		functio nihil ini(@extensio basis, ~collectiones.dictionarium[linea, linea] arg) iacit redefini {
+			_argumenta = arg;
+			__ifr_rs = ego;
+			su = para_servum() acsi (systema_usorum);
+			permissiones = para_servum()^.para_extensiones(ego);
+		}
+		functio nihil post_ini() iacit redefini {}
+		functio nihil siste() redefini { __ifr_rs = nullus; }
+	}
+	structura ifr_rs_permissio hereditat extensio {
+		@extensio _parens;
+		collectiones.dictionarium[linea, linea] _argumenta;
+
+		linea dominatus_require;
+		nint permissiones;
+		nint permissiones_require;
+
+		@nihil genus_extensionis_radicalis { adipisce redefini { responde ifr_rs; } }
+		@extensio extensio_radicalis { adipisce redefini { responde _parens; } }
+		!collectiones.dictionarium[linea, linea] argumenta { adipisce iacit redefini { responde crea(collectiones.dictionarium[linea, linea], _argumenta); } }
+		functio nihil ini(@extensio basis, ~collectiones.dictionarium[linea, linea] arg) iacit redefini {
+			_argumenta = arg;
+			_parens = basis;
+			var aarg = _argumenta["dominatus-require"];
+			si (aarg != nullus) dominatus_require = aarg^;
+			alioqui iace errores.argumentum_falsum;
+			aarg = _argumenta["permissiones-require"];
+			si (aarg != nullus) permissiones_require = aarg^.ad_nint32();
+			alioqui iace errores.argumentum_falsum;
+			aarg = _argumenta["permissiones"];
+			si (aarg != nullus) permissiones = aarg^.ad_nint32();
+			alioqui iace errores.argumentum_falsum;
+		}
+		functio nihil post_ini() iacit redefini {}
+		functio nihil siste() redefini {}
+	}
+
+	var @ifr_rs __ifr_rs = nullus;
+	structura _ifr_rs_servus hereditat remota.xservus.servus {
+		nint _permissiones;
+
+		nint permissiones { adipisce iacit redefini { responde _permissiones; } }
+		remota.xservus.status_servi status { adipisce iacit redefini {
+			si (!(_permissiones & modus_limae.legere)) iace errores.ie_falsum, errores.ie_permissio_nulla;
+			remota.xservus.status_servi s;
+			var ext = para_servum()^.para_extensiones();
+			per (var i : ext^) {
+				remota.xservus.extensio e;
+				var a = ext^[i]^.argumenta;
+				e.nomen_classis = repulsus.expone_symbolum(modulus(), ext^[i]^.para_classem())^.nomen;
+				e.numerus_parentis = -1;
+				per (var j : a^) e.argumenta.adde(j^.valor);
+				s.extensiones.adde(e);
+			}
+			per (var i : ext^) {
+				var extp = ext^[i]^.extensio_radicalis;
+				si (extp == nullus) dura;
+				per (var j : ext^) si (ext^[j].valor() == extp) { s.extensiones[i].numerus_parentis = j; exi; }
+			}
+			potentia.status_potentiae sp;
+			potentia.lege_statum_potentiae(sp);
+			s.valor_praecipiendi = sp.valor_praecipiendi;
+			si (sp.altilium == potentia.status_altilii.praecipiens) s.potentia = 1;
+			alioqui si (sp.altilium == potentia.status_altilii.depraecipiens) s.potentia = -1;
+			alioqui s.potentia = 0;
+			responde s;
+		} }
+		functio nihil siste_systemam() iacit redefini {
+			si (!(_permissiones & modus_limae.scribere)) iace errores.ie_falsum, errores.ie_permissio_nulla;
+			muta_contextum(para_servum()^.cauda_terminalis) {
+				potentia.siste_machinam(potentia.modus_sistendi.siste, non);
+			};
+			para_servum()^.siste();
+		}
+		functio nihil recipe_systemam() iacit redefini {
+			si (!(_permissiones & modus_limae.scribere)) iace errores.ie_falsum, errores.ie_permissio_nulla;
+			muta_contextum(para_servum()^.cauda_terminalis) {
+				potentia.siste_machinam(potentia.modus_sistendi.recipe, non);
+			};
+			para_servum()^.siste();
+		}
+		functio nihil siste_servum() iacit redefini {
+			si (!(_permissiones & modus_limae.scribere)) iace errores.ie_falsum, errores.ie_permissio_nulla;
+			para_servum()^.siste();
+		}
+		functio nihil recipe_servum() iacit redefini {
+			si (!(_permissiones & modus_limae.scribere)) iace errores.ie_falsum, errores.ie_permissio_nulla;
+			muta_contextum(para_servum()^.cauda_terminalis) {
+				contextus.dormi(70000);
+				proba {
+					var arg = para_argumenta();
+					xx.descriptio_processi desc(semita.modulus_primus(), @arg^[1], arg^.longitudo - 1);
+					desc.impone(xx.modus_creandi_processi.actuarius_parentis | xx.modus_creandi_processi.non_nativus);
+					desc.exequi();
+				}
+			};
+			para_servum()^.siste();
+		}
+	}
+	[(remota.attributa.exportatum) "remota.xservus.authorizator"]
+	structura _ifr_rs_authorizator hereditat remota.xservus.authorizator {
+		functio !remota.xservus.servus authoriza(~linea usor, ~linea clavis) iacit redefini {
+			var u = __ifr_rs^.su^.authoriza(usor, clavis);
+			si (!u) iace errores.argumentum_falsum;
+			nint perm = 0;
+			per (var i : __ifr_rs^.permissiones^) {
+				var e = __ifr_rs^.permissiones^[i] acsi (ifr_rs_permissio);
+				si (u^.permissiones(e^.dominatus_require) & e^.permissiones_require == e^.permissiones_require) {
+					perm = e^.permissiones;
+					exi;
+				}
+			}
+			si (!perm) iace errores.ie_falsum, errores.ie_permissio_nulla;
+			var srvs = crea(_ifr_rs_servus);
+			srvs^._permissiones = perm;
+			responde srvs acsi (remota.xservus.servus);
+		}
+	}
+}

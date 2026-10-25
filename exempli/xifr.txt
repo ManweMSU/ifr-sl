@@ -1,0 +1,11 @@
+"xservus.ifr" {
+	Classis			= "xservus.ifr"	// Сервер удалённого вызова процедур
+}
+"xservus.ifr_portus" {
+	Classis		= "xservus.ifr_portus"	// Отдельный порт работы сервера "xservus.ifr"
+	Modus		= "IFR-IPv4"			// Тип службы: "IFR-Locale", "IFR-IPv4", "IFR-IPv6", "IFR-TLS-IPv4" или "IFR-TLS-IPv6"
+	Nomen		= "ifr.servus.sock"		// Имя сокета для локальной службы
+	Portus		= 6666					// Номер порта для IP-службы
+	Indentitas	= "id.p12"				// Личность в формате PKCS #12 для HTTPS варианта
+	Clavis		= "1234"				// Пароль от личности
+}
